@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import { Chessboard } from './components'
 
@@ -15,6 +15,58 @@ function App() {
     ]
   })
   const [board, setBoard] = useState([])
+
+  useEffect(() => {
+    const possibleMovesFunction = () => {
+      const columnIndex = columns.indexOf(knight.currentPosition[0])
+      const rowIndex = rows.indexOf(knight.currentPosition[1])
+      let possibleMoves = []
+
+      //UP-RIGHT
+      if (rows[rowIndex + 2] && columns[columnIndex + 1]) {
+        possibleMoves.push([columns[columnIndex + 1], rows[rowIndex + 2]])
+        // console.log(rows[rowIndex + 2], columns[columnIndex + 1]);
+      }
+      //UP-LEFT
+      if (rows[rowIndex + 2] && columns[columnIndex - 1]) {
+        possibleMoves.push([columns[columnIndex - 1], rows[rowIndex + 2]])
+        // console.log(rows[rowIndex + 2], columns[columnIndex - 1]);
+      }
+      //DOWN-LEFT
+      if (rows[rowIndex - 2] && columns[columnIndex - 1]) {
+        possibleMoves.push([columns[columnIndex - 1], rows[rowIndex - 2]])
+        // console.log(rows[rowIndex - 2], columns[columnIndex - 1]);
+      }
+      //DOWN-RIGHT
+      if (rows[rowIndex - 2] && columns[columnIndex + 1]) {
+        possibleMoves.push([columns[columnIndex + 1], rows[rowIndex - 2]])
+        // console.log(rows[rowIndex - 2], columns[columnIndex + 1]);
+      }
+      //LEFT-UP
+      if (columns[columnIndex - 2] && rows[rowIndex + 1]) {
+        possibleMoves.push([columns[columnIndex - 2], rows[rowIndex + 1]])
+        // console.log(rows[rowIndex + 1], columns[columnIndex - 2]);
+      }
+      //LEFT-DOWN
+      if (columns[columnIndex - 2] && rows[rowIndex - 1]) {
+        possibleMoves.push([columns[columnIndex - 2], rows[rowIndex - 1]])
+        // console.log(rows[rowIndex - 1], columns[columnIndex - 2]);
+      }
+      //RIGHT-UP
+      if (columns[columnIndex + 2] && rows[rowIndex + 1]) {
+        possibleMoves.push([columns[columnIndex + 2], rows[rowIndex + 1]])
+        // console.log(rows[rowIndex + 1], columns[columnIndex + 2]);
+      }
+      //RIGHT-DOWN
+      if (columns[columnIndex + 2] && rows[rowIndex - 1]) {
+        possibleMoves.push([columns[columnIndex + 2], rows[rowIndex - 1]])
+        // console.log(rows[rowIndex - 1], columns[columnIndex + 2]);
+      }
+      // console.log(possibleMoves);
+      setKnight({ ...knight, possibleMoves })
+    }
+    possibleMovesFunction()
+  }, [knight.currentPosition])
 
   return (
     <div className='App'>
