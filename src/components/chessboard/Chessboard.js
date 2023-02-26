@@ -22,23 +22,33 @@ const Chessboard = ({
             classList = classList + ' black-tile'
           }
 
-          if (knight.currentPosition.join('') === columns[j] + rows[i]) {
-            classList = classList + ' knight'
+          if (
+            knight.currentPosition[0] !== undefined &&
+            knight.currentPosition[1] !== undefined
+          ) {
+            knight.possibleMoves.map((move) =>
+              move.join('') === columns[j] + rows[i]
+                ? (classList = classList + ' possible-move')
+                : classList
+            )
           }
-
-          knight.possibleMoves.map((move) =>
-            move.join('') === columns[j] + rows[i]
-              ? (classList = classList + ' possible-move')
-              : classList
-          )
 
           tempBoard.push([
             <div
               onClick={tileClickHandler}
               className={classList}
               key={columns[j] + rows[i]}
+              id={columns[j] + rows[i]}
             >
-              {columns[j] + rows[i]}
+              {knight.currentPosition.join('') === columns[j] + rows[i] ? (
+                <img
+                  className='knight'
+                  src='https://freesvg.org/img/portablejim-Chess-tile-Knight-2.png'
+                  alt='Banner'
+                />
+              ) : (
+                <span id={columns[j] + rows[i]}>{columns[j] + rows[i]}</span>
+              )}
             </div>
           ])
         }
@@ -47,16 +57,15 @@ const Chessboard = ({
     }
 
     createBoard()
-  }, [knight.possibleMoves])
+  }, [knight.possibleMoves, knight.currentPosition])
 
   const tileClickHandler = (e) => {
-    // if (e.target.classList.contains('possible-move')) {
-    console.log(e.target.innerText)
-    setKnight({
-      ...knight,
-      currentPosition: [e.target.innerText[0], e.target.innerText[1]]
-    })
-    // }
+    if (knight.currentPosition.join('') !== e.target.id) {
+      setKnight({
+        ...knight,
+        currentPosition: [e.target.id[0], e.target.id[1]]
+      })
+    }
   }
 
   return <div className='chess-board'>{board?.map((tile, index) => tile)}</div>

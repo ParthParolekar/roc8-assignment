@@ -3,6 +3,7 @@ import './App.css'
 import { Chessboard } from './components'
 
 function App() {
+  const [darkTheme, setDarkTheme] = useState(true)
   const columns = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
   const rows = ['1', '2', '3', '4', '5', '6', '7', '8']
   let tempBoard = []
@@ -14,6 +15,7 @@ function App() {
       ['d', '2']
     ]
   })
+
   const [board, setBoard] = useState([])
 
   useEffect(() => {
@@ -25,51 +27,62 @@ function App() {
       //UP-RIGHT
       if (rows[rowIndex + 2] && columns[columnIndex + 1]) {
         possibleMoves.push([columns[columnIndex + 1], rows[rowIndex + 2]])
-        // console.log(rows[rowIndex + 2], columns[columnIndex + 1]);
       }
       //UP-LEFT
       if (rows[rowIndex + 2] && columns[columnIndex - 1]) {
         possibleMoves.push([columns[columnIndex - 1], rows[rowIndex + 2]])
-        // console.log(rows[rowIndex + 2], columns[columnIndex - 1]);
       }
       //DOWN-LEFT
       if (rows[rowIndex - 2] && columns[columnIndex - 1]) {
         possibleMoves.push([columns[columnIndex - 1], rows[rowIndex - 2]])
-        // console.log(rows[rowIndex - 2], columns[columnIndex - 1]);
       }
       //DOWN-RIGHT
       if (rows[rowIndex - 2] && columns[columnIndex + 1]) {
         possibleMoves.push([columns[columnIndex + 1], rows[rowIndex - 2]])
-        // console.log(rows[rowIndex - 2], columns[columnIndex + 1]);
       }
       //LEFT-UP
       if (columns[columnIndex - 2] && rows[rowIndex + 1]) {
         possibleMoves.push([columns[columnIndex - 2], rows[rowIndex + 1]])
-        // console.log(rows[rowIndex + 1], columns[columnIndex - 2]);
       }
       //LEFT-DOWN
       if (columns[columnIndex - 2] && rows[rowIndex - 1]) {
         possibleMoves.push([columns[columnIndex - 2], rows[rowIndex - 1]])
-        // console.log(rows[rowIndex - 1], columns[columnIndex - 2]);
       }
       //RIGHT-UP
       if (columns[columnIndex + 2] && rows[rowIndex + 1]) {
         possibleMoves.push([columns[columnIndex + 2], rows[rowIndex + 1]])
-        // console.log(rows[rowIndex + 1], columns[columnIndex + 2]);
       }
       //RIGHT-DOWN
       if (columns[columnIndex + 2] && rows[rowIndex - 1]) {
         possibleMoves.push([columns[columnIndex + 2], rows[rowIndex - 1]])
-        // console.log(rows[rowIndex - 1], columns[columnIndex + 2]);
       }
-      // console.log(possibleMoves);
       setKnight({ ...knight, possibleMoves })
     }
+
     possibleMovesFunction()
   }, [knight.currentPosition])
 
   return (
-    <div className='App'>
+    <div className={`App ${darkTheme && 'dark'}`}>
+      <nav className='navbar'>
+        <h1>Chess Knight</h1>
+        <button
+          onClick={() => setDarkTheme(!darkTheme)}
+          className='theme-button'
+        >
+          {darkTheme ? 'Light' : 'Dark'}
+        </button>
+      </nav>
+      <p>
+        The chess board shows the possible spaces the knight can take with green
+        boxes.
+      </p>
+      <p>
+        {' '}
+        Click on any one of the block to move the knight and see all the
+        possible moves from that block.
+      </p>
+      <p> Clicking on the knight will hide the knight.</p>
       <Chessboard
         columns={columns}
         rows={rows}

@@ -1,5 +1,73 @@
 @import './components/chessboard//chessboard.css';
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 .App {
   text-align: center;
+  width: 100%;
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+}
+
+.dark {
+  background-color: black;
+  color: white;
+}
+
+p {
+  margin: 2rem 0;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  background-color: black;
+}
+
+.dark .navbar {
+  background-color: white;
+}
+
+.navbar h1 {
+  margin: 1rem 0;
+  color: white;
+}
+
+.dark .navbar h1 {
+  color: black;
+}
+
+.theme-button {
+  background-color: black;
+  padding: 0.5rem;
+  margin: 1rem 0;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  border-radius: 10px;
+  color: white;
+  border: 1px solid white;
+}
+
+.theme-button:hover {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+}
+
+.dark .theme-button {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  border: 1px solid black;
+}
+
+.dark .theme-button:hover {
+  background-color: black;
+  color: white;
+  border: 1px solid white;
 }
